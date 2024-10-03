@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch ./src/server.ts",
-    "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate"
+    "dev": "tsx watch --env-file .env src/http/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,11 +11,19 @@
   "description": "",
   "devDependencies": {
     "@biomejs/biome": "^1.9.2",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.6.1",
+    "drizzle-kit": "^0.24.2",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "fastify": "^5.0.0"
+    "@paralleldrive/cuid2": "^2.2.2",
+    "bcrypt": "^5.1.1",
+    "drizzle-orm": "^0.33.0",
+    "fastify": "^5.0.0",
+    "fastify-type-provider-zod": "^4.0.1",
+    "postgres": "^3.4.4",
+    "zod": "^3.23.8"
   }
 }

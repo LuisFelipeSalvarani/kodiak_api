@@ -5,7 +5,7 @@ export const users = pgTable('users', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => createId()),
-  username: text('username').notNull(),
+  email: text('email').notNull(),
   password: text('password').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
