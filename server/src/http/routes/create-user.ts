@@ -9,15 +9,20 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
     {
       schema: {
         body: z.object({
-          email: z.string(),
+          email: z.string().email(),
           password: z.string(),
         }),
+        response: {
+          201: z.object({
+            userId: z.string().uuid(),
+          }),
+        },
       },
     },
     async (request, reply) => {
       const { email, password } = request.body
 
-      const salt = await bcrypt.genSalt()
+      const salt = await bcrypt.genSalt(10)
       const enpryptedPassword = await bcrypt.hash(password, salt)
 
       const { user } = await createUser({
