@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt'
-import type { FastifyPluginAsyncZod, ZodTypeProvider } from 'fastify-type-provider-zod'
+import type {
+  FastifyPluginAsyncZod,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
 import { string, z } from 'zod'
 import { createUser } from '../../functions/create-user'
 import { authenticate } from '../../hook/auth-hook'
@@ -17,9 +20,9 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
         }),
         response: {
           201: z.object({
-            userId: string().cuid2()
-          })
-        }
+            userId: string().cuid2(),
+          }),
+        },
       },
       onRequest: [authenticate],
     },

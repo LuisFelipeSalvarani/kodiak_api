@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt'
-import type { FastifyPluginAsyncZod, ZodTypeProvider } from 'fastify-type-provider-zod'
+import type {
+  FastifyPluginAsyncZod,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { login } from '../../functions/login'
 
@@ -9,7 +12,7 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
     {
       schema: {
         summary: 'Login',
-        tags: ['Usuário'],
+        tags: ['Autenticação'],
         body: z.object({
           email: z.string().email(),
           password: z.string(),
@@ -42,7 +45,7 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
           path: '/',
           maxAge: 3600 * 8,
         })
-        .send({ message: 'Login com sucesso!' })
+        .send({ message: 'Login realizado com sucesso!' })
     }
   )
 }
