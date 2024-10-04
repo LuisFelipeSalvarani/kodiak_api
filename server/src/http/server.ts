@@ -18,8 +18,16 @@ const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-app.register(fastifyJwt, { secret: env.SECRET })
+app.register(fastifyJwt, { secret: env.SECRET, cookie: {
+  cookieName: 'token',
+  signed: false,
+}, sign: {
+  expiresIn: '8h'
+} },
+)
+
 app.register(fastifyCookie)
+
 app.register(fastifySwagger, {
   swagger: {
     consumes: ['application/json'],

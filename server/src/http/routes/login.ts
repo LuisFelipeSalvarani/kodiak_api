@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod, ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { login } from '../../functions/login'
 
 export const LoginRoute: FastifyPluginAsyncZod = async app => {
-  app.post(
+  app.withTypeProvider<ZodTypeProvider>().post(
     '/users/login',
     {
       schema: {
