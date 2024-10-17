@@ -3,11 +3,22 @@ import { db } from '../db'
 import { users } from '../db/schema'
 
 interface CreateUserRequest {
+  name: string
   email: string
   password: string
+  position: string
+  idCostumer: number
+  tradeName: string
 }
 
-export async function createUser({ email, password }: CreateUserRequest) {
+export async function createUser({
+  name,
+  email,
+  password,
+  position,
+  idCostumer,
+  tradeName,
+}: CreateUserRequest) {
   const result = await db
     .select({ email: users.email })
     .from(users)
@@ -19,7 +30,7 @@ export async function createUser({ email, password }: CreateUserRequest) {
 
   const insertUser = await db
     .insert(users)
-    .values({ email, password })
+    .values({ name, email, password, position, idCostumer, tradeName })
     .returning()
 
   const user = insertUser[0]

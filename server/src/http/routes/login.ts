@@ -19,7 +19,14 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
         }),
         response: {
           200: z.object({
-            message: z.string(),
+            user: z.object({
+              userId: z.string().cuid2(),
+              name: z.string(),
+              email: z.string().email(),
+              position: z.string(),
+              idCostumer: z.number(),
+              tradeName: z.string(),
+            }),
           }),
         },
       },
@@ -27,15 +34,15 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
     async (request, reply) => {
       const { email, password } = request.body
 
-      const {
-        user: { userId, password: passwordHash },
-      } = await login(email)
+      const { user: userData } = await login(email)
 
-      const isPasswordValid = await bcrypt.compare(password, passwordHash)
+      const isPasswordValid = await bcrypt.compare(password, userData.password)
 
       if (!isPasswordValid) throw new Error('Dados incorretos!')
 
-      const token = app.jwt.sign({ userId })
+      const token = app.jwt.sign({ userId: userData.userId })
+
+      const { password: _, ...user } = userData
 
       return reply
         .status(200)
@@ -45,7 +52,7 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
           path: '/',
           maxAge: 3600 * 8,
         })
-        .send({ message: 'Login realizado com sucesso!' })
+        .send({ user })
     }
   )
 }

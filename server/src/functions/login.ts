@@ -4,7 +4,15 @@ import { users } from '../db/schema'
 
 export async function login(email: string) {
   const result = await db
-    .select({ userId: users.id, email: users.email, password: users.password })
+    .select({
+      userId: users.id,
+      name: users.name,
+      email: users.email,
+      password: users.password,
+      position: users.position,
+      idCostumer: users.idCostumer,
+      tradeName: users.tradeName,
+    })
     .from(users)
     .where(eq(users.email, email))
 
