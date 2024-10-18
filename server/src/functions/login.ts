@@ -10,7 +10,7 @@ export async function login(email: string) {
       email: users.email,
       password: users.password,
       position: users.position,
-      idCostumer: users.idCostumer,
+      idCompany: users.idCompany,
       tradeName: users.tradeName,
     })
     .from(users)

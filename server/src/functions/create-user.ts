@@ -7,7 +7,7 @@ interface CreateUserRequest {
   email: string
   password: string
   position: string
-  idCostumer: number
+  idCompany: string
   tradeName: string
 }
 
@@ -16,21 +16,12 @@ export async function createUser({
   email,
   password,
   position,
-  idCostumer,
+  idCompany,
   tradeName,
 }: CreateUserRequest) {
-  const result = await db
-    .select({ email: users.email })
-    .from(users)
-    .where(eq(users.email, email))
-
-  const userExists = result[0]
-
-  if (userExists) throw new Error('E-mail já cadastrado!')
-
   const insertUser = await db
     .insert(users)
-    .values({ name, email, password, position, idCostumer, tradeName })
+    .values({ name, email, password, position, idCompany, tradeName })
     .returning()
 
   const user = insertUser[0]

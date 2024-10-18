@@ -24,7 +24,7 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
               name: z.string(),
               email: z.string().email(),
               position: z.string(),
-              idCostumer: z.number(),
+              idCompany: z.number(),
               tradeName: z.string(),
             }),
           }),

@@ -10,6 +10,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { env } from '../env'
+import { createCompanyRoute } from './routes/create-company'
 import { createUserRoute } from './routes/create-user'
 import { LoginRoute } from './routes/login'
 import { logoutRoute } from './routes/logout'
@@ -50,9 +51,10 @@ app.register(fastifySwaggerUi, {
 })
 
 app.register(createUserRoute)
+app.register(createCompanyRoute)
 app.register(LoginRoute)
 app.register(logoutRoute)
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server running!')
 })
