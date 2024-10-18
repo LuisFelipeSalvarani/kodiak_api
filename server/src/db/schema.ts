@@ -27,7 +27,7 @@ export const companies = pgTable('companies', {
   tradeName: text('trade_name').notNull(),
   cep: text('cep').notNull(),
   street: text('street').notNull(),
-  number: text('number').notNull(),
+  number: integer('number').notNull(),
   complement: text('complement'),
   district: text('district').notNull(),
   city: text('city').notNull(),

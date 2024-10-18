@@ -20,11 +20,13 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
         response: {
           200: z.object({
             user: z.object({
-              userId: z.string().cuid2(),
               name: z.string(),
               email: z.string().email(),
-              position: z.string(),
-              idCompany: z.number(),
+              position: z.union([
+                z.literal('Administrador'),
+                z.literal('Vendedor'),
+              ]),
+              idCompany: z.string().cuid2(),
               tradeName: z.string(),
             }),
           }),
@@ -42,7 +44,7 @@ export const LoginRoute: FastifyPluginAsyncZod = async app => {
 
       const token = app.jwt.sign({ userId: userData.userId })
 
-      const { password: _, ...user } = userData
+      const { userId: __, password: _, ...user } = userData
 
       return reply
         .status(200)

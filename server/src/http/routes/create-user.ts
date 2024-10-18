@@ -22,7 +22,10 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
           name: z.string(),
           email: z.string().email(),
           password: z.string(),
-          position: z.string(),
+          position: z.union([
+            z.literal('Administrador'),
+            z.literal('Vendedor'),
+          ]),
           idCompany: z.string().cuid2(),
         }),
         response: {

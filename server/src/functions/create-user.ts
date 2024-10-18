@@ -6,7 +6,7 @@ interface CreateUserRequest {
   name: string
   email: string
   password: string
-  position: string
+  position: 'Administrador' | 'Vendedor'
   idCompany: string
   tradeName: string
 }

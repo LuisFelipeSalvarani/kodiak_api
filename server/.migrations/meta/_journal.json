@@ -57,6 +57,13 @@
       "when": 1729276393328,
       "tag": "0007_first_moondragon",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1729279663682,
+      "tag": "0008_foamy_colonel_america",
+      "breakpoints": true
     }
   ]
 }
