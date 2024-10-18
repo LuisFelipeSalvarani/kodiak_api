@@ -8,7 +8,7 @@ import { z } from 'zod'
 import { db } from '../../db'
 import { companies, users } from '../../db/schema'
 import { costumers } from '../../db/viewSchema'
-import { createUser } from '../../functions/create-user'
+import { createUser } from '../../functions/user/create-user'
 import { authenticate } from '../../hook/auth-hook'
 
 export const createUserRoute: FastifyPluginAsyncZod = async app => {
@@ -37,7 +37,7 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
           }),
         },
       },
-      // onRequest: [authenticate],
+      onRequest: [authenticate],
     },
     async (request, reply) => {
       const { name, email, password, position, idCompany } = request.body

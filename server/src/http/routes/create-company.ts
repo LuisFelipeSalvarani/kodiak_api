@@ -22,7 +22,7 @@ export const createCompanyRoute: FastifyPluginAsyncZod = async app => {
           tradeName: z.string(),
           cep: z.string(),
           street: z.string(),
-          number: z.string(),
+          number: z.number(),
           complement: z.string(),
           district: z.string(),
           city: z.string(),
@@ -37,7 +37,7 @@ export const createCompanyRoute: FastifyPluginAsyncZod = async app => {
           }),
         },
       },
-      // onRequest: [authenticate],
+      onRequest: [authenticate],
     },
     async (request, reply) => {
       const {

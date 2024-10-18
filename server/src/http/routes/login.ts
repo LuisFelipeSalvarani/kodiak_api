@@ -4,7 +4,7 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { login } from '../../functions/login'
+import { login } from '../../functions/auth/login'
 
 export const LoginRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().post(

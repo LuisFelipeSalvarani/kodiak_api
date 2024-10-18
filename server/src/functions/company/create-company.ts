@@ -1,4 +1,3 @@
-import { eq } from 'drizzle-orm'
 import { db } from '../../db'
 import { companies } from '../../db/schema'
 
@@ -8,7 +7,7 @@ interface CreateCompanyRequest {
   tradeName: string
   cep: string
   street: string
-  number: string
+  number: number
   complement?: string
   district: string
   city: string
