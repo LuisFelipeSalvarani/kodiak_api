@@ -1,6 +1,6 @@
 import { date, decimal, integer, pgTable, text } from 'drizzle-orm/pg-core'
 
-export const costumers = pgTable('fatec_clientes', {
+export const customers = pgTable('fatec_clientes', {
   idCustomer: integer('id_cliente').primaryKey(),
   companyName: text('razao_cliente'),
   tradeName: text('nome_fantasia'),
@@ -22,7 +22,7 @@ export const sales = pgTable('fatec_vendas', {
   issueDate: date('data_emissao'),
   type: integer('tipo'),
   descriptionType: text('descricao_tipo'),
-  idCostumer: integer('id_cliente'),
+  idCustomer: integer('id_cliente'),
   companyName: text('razao_cliente'),
   tradeName: text('nome_fantasia'),
   idCustomerGroup: integer('id_grupo_cliente'),
@@ -43,7 +43,7 @@ export const receivables = pgTable('fatec_contas_receber', {
   document: text('documento'),
   title: integer('titulo'),
   installments: integer('parcela'),
-  idCostumer: integer('id_cliente'),
+  idCustomer: integer('id_cliente'),
   companyName: text('razao_cliente'),
   tradeName: text('nome_fantasia'),
   idCustomerGroup: integer('id_grupo_cliente'),

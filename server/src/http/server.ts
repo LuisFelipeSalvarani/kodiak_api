@@ -14,6 +14,8 @@ import { createCompanyRoute } from './routes/create-company'
 import { createUserRoute } from './routes/create-user'
 import { LoginRoute } from './routes/login'
 import { logoutRoute } from './routes/logout'
+import { SalesByCostumerRoute } from './routes/sales-by-costumer'
+import { SalesByProductGroupRoute } from './routes/sales-by-products-group'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -54,6 +56,8 @@ app.register(createUserRoute)
 app.register(createCompanyRoute)
 app.register(LoginRoute)
 app.register(logoutRoute)
+app.register(SalesByCostumerRoute)
+app.register(SalesByProductGroupRoute)
 
 app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server running!')

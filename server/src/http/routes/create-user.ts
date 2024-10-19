@@ -7,7 +7,7 @@ import type {
 import { z } from 'zod'
 import { db } from '../../db'
 import { companies, users } from '../../db/schema'
-import { costumers } from '../../db/viewSchema'
+import { customers } from '../../db/viewSchema'
 import { createUser } from '../../functions/user/create-user'
 import { authenticate } from '../../hook/auth-hook'
 
@@ -52,17 +52,17 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
       if (userExists)
         return reply.status(400).send({ message: 'E-mail já cadastrado!' })
 
-      const costumer = await db
+      const customer = await db
         .select({
           tradeName: companies.tradeName,
         })
         .from(companies)
         .where(eq(companies.id, idCompany))
 
-      if (costumer.length === 0)
+      if (customer.length === 0)
         return reply.status(400).send({ message: 'Empresa não encontrada!' })
 
-      const tradeName = costumer[0].tradeName ?? ''
+      const tradeName = customer[0].tradeName ?? ''
 
       const salt = await bcrypt.genSalt(10)
       const enpryptedPassword = await bcrypt.hash(password, salt)
