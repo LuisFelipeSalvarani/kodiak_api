@@ -11,7 +11,8 @@ export async function salesByCustomer() {
       totalSalesValue: sum(sales.total).as('valor_total_vendas'),
     })
     .from(sales)
-    .where(desc(sql`valor_total_vendas`))
+    .groupBy(sales.idCustomer, sales.companyName)
+    .orderBy(desc(sql`valor_total_vendas`))
 
   return {
     report,

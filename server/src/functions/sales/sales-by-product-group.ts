@@ -11,7 +11,7 @@ export async function salesByProductGroup() {
     })
     .from(sales)
     .innerJoin(products, eq(sales.idProduct, products.idProduct))
-    .groupBy(products.descriptionProduct)
+    .groupBy(products.descriptionGroup)
     .orderBy(desc(sql`valor_total_vendas`))
 
   return {

@@ -4,7 +4,7 @@ import { salesByProductGroup } from '../../functions/sales/sales-by-product-grou
 
 export const SalesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
   app.get(
-    '/sales/by/products',
+    '/sales/by/product-group',
     {
       schema: {
         summary: 'Relatório de vendas por grupo de produto',
