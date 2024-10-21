@@ -11,14 +11,14 @@ interface CreateUserRequest {
   tradeName: string
 }
 
-export async function createUser({
+export const createUser = async ({
   name,
   email,
   password,
   position,
   idCompany,
   tradeName,
-}: CreateUserRequest) {
+}: CreateUserRequest) => {
   const insertUser = await db
     .insert(users)
     .values({ name, email, password, position, idCompany, tradeName })

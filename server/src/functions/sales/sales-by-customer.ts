@@ -2,7 +2,7 @@ import { desc, sql, sum } from 'drizzle-orm'
 import { view } from '../../db'
 import { sales } from '../../db/viewSchema'
 
-export async function salesByCustomer() {
+export const salesByCustomer = async () => {
   const report = await view
     .select({
       idCostumer: sales.idCustomer,

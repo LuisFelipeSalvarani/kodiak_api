@@ -2,7 +2,7 @@ import { desc, eq, sql, sum } from 'drizzle-orm'
 import { view } from '../../db'
 import { products, sales } from '../../db/viewSchema'
 
-export async function salesByProductGroup() {
+export const salesByProductGroup = async () => {
   const report = await view
     .select({
       descriptionGroup: products.descriptionGroup,

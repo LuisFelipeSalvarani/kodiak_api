@@ -14,7 +14,7 @@ interface CreateCompanyRequest {
   state: string
 }
 
-export async function createCompany({
+export const createCompany = async ({
   cnpj,
   companyName,
   tradeName,
@@ -25,7 +25,7 @@ export async function createCompany({
   district,
   city,
   state,
-}: CreateCompanyRequest) {
+}: CreateCompanyRequest) => {
   const insertCompany = await db
     .insert(companies)
     .values({

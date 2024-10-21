@@ -1,6 +1,7 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { salesByCustomer } from '../../../functions/sales/sales-by-customer'
+import { authenticate } from '../../../hook/auth-hook'
 
 export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
   app.get(
@@ -32,6 +33,7 @@ export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
           },
         ],
       },
+      onRequest: [authenticate],
     },
     async (_, reply) => {
       const { report } = await salesByCustomer()
@@ -39,7 +41,7 @@ export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
       if (!report)
         return reply
           .status(400)
-          .send({ message: 'Não foi possível obter o relatório' })
+          .send({ message: 'Não foi possível obter o relatório!' })
 
       return reply.status(200).send({ report })
     }

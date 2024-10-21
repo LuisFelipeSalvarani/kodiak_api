@@ -1,6 +1,7 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { salesByProductGroup } from '../../../functions/sales/sales-by-product-group'
+import { authenticate } from '../../../hook/auth-hook'
 
 export const salesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
   app.get(
@@ -31,6 +32,7 @@ export const salesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
           },
         ],
       },
+      onRequest: [authenticate],
     },
     async (_, reply) => {
       const { report } = await salesByProductGroup()
