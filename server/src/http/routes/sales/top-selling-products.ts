@@ -18,7 +18,7 @@ export const topSellingProductsRoute: FastifyPluginAsyncZod = async app => {
           200: z.object({
             topProducts: z.array(
               z.object({
-                idProduct: z.number().nullable(),
+                idProduct: z.any(),
                 descriptionProduct: z.string().nullable(),
                 totalSelling: z.string().nullable(),
                 totalSalesValue: z.string().nullable(),
@@ -39,8 +39,6 @@ export const topSellingProductsRoute: FastifyPluginAsyncZod = async app => {
     },
     async (_, reply) => {
       const { topProducts } = await topSellingProducts()
-
-      console.log(topProducts)
 
       if (!topProducts)
         return reply
