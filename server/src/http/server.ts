@@ -42,7 +42,7 @@ app.register(fastifySwagger, {
     info: {
       title: 'Kodiak Sales Manager',
       description:
-        'Especificações da API para o back-end da aplicação Kodiak Sales Manager',
+        'Especificações da API para o backend da aplicação Kodiak Sales Manager',
       version: '1.0.0',
     },
     securityDefinitions: {
