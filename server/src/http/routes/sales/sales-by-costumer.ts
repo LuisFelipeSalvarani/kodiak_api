@@ -1,10 +1,10 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { salesByCustomer } from '../../functions/sales/sales-by-customer'
+import { salesByCustomer } from '../../../functions/sales/sales-by-customer'
 
-export const SalesByCostumerRoute: FastifyPluginAsyncZod = async app => {
+export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
   app.get(
-    '/sales/by/costumer',
+    '/by/costumer',
     {
       schema: {
         summary: 'Relatório de vendas por cliente',
@@ -26,6 +26,11 @@ export const SalesByCostumerRoute: FastifyPluginAsyncZod = async app => {
             message: z.string(),
           }),
         },
+        security: [
+          {
+            CookieAuth: [],
+          },
+        ],
       },
     },
     async (_, reply) => {

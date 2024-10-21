@@ -2,6 +2,7 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
+import { sql } from 'drizzle-orm'
 import fastify from 'fastify'
 import {
   type ZodTypeProvider,
@@ -9,13 +10,12 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { db, view } from '../db'
 import { env } from '../env'
-import { createCompanyRoute } from './routes/create-company'
-import { createUserRoute } from './routes/create-user'
-import { LoginRoute } from './routes/login'
-import { logoutRoute } from './routes/logout'
-import { SalesByCostumerRoute } from './routes/sales-by-costumer'
-import { SalesByProductGroupRoute } from './routes/sales-by-products-group'
+import { authRoutes } from './routes/auth/auth-routes'
+import { companiesRoutes } from './routes/companies/companies-routes'
+import { salesRoutes } from './routes/sales/sales-routes'
+import { usersRoutes } from './routes/users/users-routes'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -40,10 +40,18 @@ app.register(fastifySwagger, {
     consumes: ['application/json'],
     produces: ['application/json'],
     info: {
-      title: 'Kodiak Pocket',
+      title: 'Kodiak Sales Manager',
       description:
-        'Especificações da API para o back-end da aplicação Kodiak Pocket',
+        'Especificações da API para o back-end da aplicação Kodiak Sales Manager',
       version: '1.0.0',
+    },
+    securityDefinitions: {
+      CookieAuth: {
+        type: 'apiKey',
+        in: 'cookie',
+        name: 'token',
+        description: 'Cookie HTTP-Only que contém o token JWT de autenticação',
+      },
     },
   },
   transform: jsonSchemaTransform,
@@ -52,13 +60,29 @@ app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
 
-app.register(createUserRoute)
-app.register(createCompanyRoute)
-app.register(LoginRoute)
-app.register(logoutRoute)
-app.register(SalesByCostumerRoute)
-app.register(SalesByProductGroupRoute)
+app.register(usersRoutes, { prefix: '/users' })
+app.register(companiesRoutes, { prefix: '/companies' })
+app.register(authRoutes, { prefix: '/auth' })
+app.register(salesRoutes, { prefix: '/sales' })
 
-app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
+app.listen({ port: 3333, host: '0.0.0.0' }).then(async () => {
+  const dbConnect = await db
+    .execute(sql`SELECT 1`)
+    .then(() => {
+      console.log('Database connected')
+    })
+    .catch(() => {
+      console.log('Failed connect database')
+    })
+
+  await view
+    .execute(sql`SELECT 1`)
+    .then(() => {
+      console.log('View connected')
+    })
+    .catch(() => {
+      console.log('Failed connect view')
+    })
+
   console.log('HTTP server running!')
 })

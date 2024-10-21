@@ -1,10 +1,10 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { salesByProductGroup } from '../../functions/sales/sales-by-product-group'
+import { salesByProductGroup } from '../../../functions/sales/sales-by-product-group'
 
-export const SalesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
+export const salesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
   app.get(
-    '/sales/by/product-group',
+    '/by/product-group',
     {
       schema: {
         summary: 'Relatório de vendas por grupo de produto',
@@ -25,6 +25,11 @@ export const SalesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
             message: z.string(),
           }),
         },
+        security: [
+          {
+            CookieAuth: [],
+          },
+        ],
       },
     },
     async (_, reply) => {

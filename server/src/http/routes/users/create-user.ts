@@ -5,15 +5,15 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { db } from '../../db'
-import { companies, users } from '../../db/schema'
-import { customers } from '../../db/viewSchema'
-import { createUser } from '../../functions/user/create-user'
-import { authenticate } from '../../hook/auth-hook'
+import { db } from '../../../db'
+import { companies, users } from '../../../db/schema'
+import { customers } from '../../../db/viewSchema'
+import { createUser } from '../../../functions/user/create-user'
+import { authenticate } from '../../../hook/auth-hook'
 
 export const createUserRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/users',
+    '',
     {
       schema: {
         summary: 'Cadastro de usuário',
@@ -36,6 +36,11 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
             message: z.string(),
           }),
         },
+        security: [
+          {
+            CookieAuth: [],
+          },
+        ],
       },
       onRequest: [authenticate],
     },

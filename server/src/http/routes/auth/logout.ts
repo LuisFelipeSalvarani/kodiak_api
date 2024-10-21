@@ -1,10 +1,10 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { authenticate } from '../../hook/auth-hook'
+import { authenticate } from '../../../hook/auth-hook'
 
 export const logoutRoute: FastifyPluginAsyncZod = async app => {
   app.get(
-    '/users/logout',
+    '/logout',
     {
       schema: {
         summary: 'Logout',
@@ -14,6 +14,11 @@ export const logoutRoute: FastifyPluginAsyncZod = async app => {
             message: z.string(),
           }),
         },
+        security: [
+          {
+            CookieAuth: [],
+          },
+        ],
       },
       onRequest: [authenticate],
     },

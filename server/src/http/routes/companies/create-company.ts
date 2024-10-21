@@ -4,14 +4,14 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { db } from '../../db'
-import { companies } from '../../db/schema'
-import { createCompany } from '../../functions/company/create-company'
-import { authenticate } from '../../hook/auth-hook'
+import { db } from '../../../db'
+import { companies } from '../../../db/schema'
+import { createCompany } from '../../../functions/company/create-company'
+import { authenticate } from '../../../hook/auth-hook'
 
 export const createCompanyRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/companies',
+    '',
     {
       schema: {
         summary: 'Cadastro de usuário',
@@ -36,6 +36,11 @@ export const createCompanyRoute: FastifyPluginAsyncZod = async app => {
             message: z.string(),
           }),
         },
+        security: [
+          {
+            CookieAuth: [],
+          },
+        ],
       },
       onRequest: [authenticate],
     },
