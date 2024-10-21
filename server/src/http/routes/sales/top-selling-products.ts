@@ -1,10 +1,13 @@
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import type {
+  FastifyPluginAsyncZod,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { topSellingProducts } from '../../../functions/sales/top-selling-products'
 import { authenticate } from '../../../hook/auth-hook'
 
 export const topSellingProductsRoute: FastifyPluginAsyncZod = async app => {
-  app.get(
+  app.withTypeProvider<ZodTypeProvider>().get(
     '/top/selling/products',
     {
       schema: {
@@ -36,6 +39,8 @@ export const topSellingProductsRoute: FastifyPluginAsyncZod = async app => {
     },
     async (_, reply) => {
       const { topProducts } = await topSellingProducts()
+
+      console.log(topProducts)
 
       if (!topProducts)
         return reply

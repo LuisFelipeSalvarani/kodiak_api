@@ -1,9 +1,12 @@
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import type {
+  FastifyPluginAsyncZod,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authenticate } from '../../../hook/auth-hook'
 
 export const logoutRoute: FastifyPluginAsyncZod = async app => {
-  app.get(
+  app.withTypeProvider<ZodTypeProvider>().get(
     '/logout',
     {
       schema: {
