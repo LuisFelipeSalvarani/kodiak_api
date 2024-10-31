@@ -30,6 +30,9 @@ export const loginRoute: FastifyPluginAsyncZod = async app => {
               tradeName: z.string(),
             }),
           }),
+          401: z.object({
+            message: z.string(),
+          }),
         },
       },
     },
@@ -38,9 +41,13 @@ export const loginRoute: FastifyPluginAsyncZod = async app => {
 
       const { user: userData } = await login(email)
 
+      if (!userData)
+        return reply.code(401).send({ message: 'Credenciais inválidas!' })
+
       const isPasswordValid = await bcrypt.compare(password, userData.password)
 
-      if (!isPasswordValid) throw new Error('Dados incorretos!')
+      if (!isPasswordValid)
+        return reply.code(401).send({ message: 'Credenciais inválidas!' })
 
       const token = app.jwt.sign({ userId: userData.userId })
 
