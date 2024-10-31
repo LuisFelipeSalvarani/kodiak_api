@@ -53,4 +53,7 @@ export const receivables = pgTable('fatec_contas_receber', {
   titleValue: decimal('valor_titulo'),
   receivedValue: decimal('valor_recebido'),
   balanceValue: decimal('valor_saldo'),
+  issueDate: date('data_emissao'),
+  entryDate: date('data_entrada'),
+  dueDate: date('data_vencimento'),
 })
