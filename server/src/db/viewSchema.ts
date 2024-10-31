@@ -11,7 +11,7 @@ export const customers = pgTable('fatec_clientes', {
 })
 
 export const products = pgTable('fatec_produtos', {
-  idProduct: integer('codigo').primaryKey(),
+  idProduct: text('codigo').primaryKey(),
   descriptionProduct: text('descricao_produto'),
   idGroup: integer('id_grupo'),
   descriptionGroup: text('descricao_grupo'),
@@ -29,7 +29,7 @@ export const sales = pgTable('fatec_vendas', {
   descriptionCustomerGroup: text('descricao_grupo_cliente'),
   city: text('cidade'),
   state: text('uf'),
-  idProduct: integer('codigo_produto'),
+  idProduct: text('codigo_produto'),
   descriptionProduct: text('descricao_produto'),
   idProductGroup: integer('id_grupo_produto'),
   descriptionProductGroup: text('descricao_grupo_produto'),
