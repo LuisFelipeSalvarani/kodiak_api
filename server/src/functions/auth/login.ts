@@ -18,8 +18,6 @@ export const login = async (email: string) => {
 
   const user = result[0]
 
-  if (!user) throw new Error('Dados incorretos!')
-
   return {
     user,
   }
