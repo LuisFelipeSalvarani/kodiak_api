@@ -3,7 +3,7 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { topSellingProducts } from '../../../functions/sales/top-selling-products'
+import { topSellingProducts } from '../../../functions/sales/get-top-selling-products'
 import { authenticate } from '../../../hook/auth-hook'
 
 export const topSellingProductsRoute: FastifyPluginAsyncZod = async app => {

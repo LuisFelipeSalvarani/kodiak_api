@@ -3,7 +3,7 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { salesByDaysOfTheLastWeek } from '../../../functions/sales/sales-by-days-of-the-last-week'
+import { salesByDaysOfTheLastWeek } from '../../../functions/sales/get-sales-by-days-of-the-last-week'
 import { authenticate } from '../../../hook/auth-hook'
 
 export const getSalesByDaysOfTheLastWeekRoute: FastifyPluginAsyncZod =

@@ -3,26 +3,25 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { salesByCustomer } from '../../../functions/sales/sales-by-customer'
+import { salesByProductGroup } from '../../../functions/sales/get-sales-by-product-group'
 import { authenticate } from '../../../hook/auth-hook'
 
-export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
+export const salesByProductGroupRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().get(
-    '/by/costumer',
+    '/by/product-group',
     {
       schema: {
-        summary: 'Relatório de vendas por cliente',
+        summary: 'Relatório de vendas por grupo de produto',
         description:
-          'Obtém o total de vendas por clientes, incluindo o valor total e quantidade de produtos vendidos',
+          'Obtém o desempenho de vendas por grupo de produto, incluindo o valor total de vendas e total de produtos vendidos',
         tags: ['Vendas'],
         response: {
           200: z.object({
             report: z.array(
               z.object({
-                idCostumer: z.number().nullable(),
-                companyName: z.string().nullable(),
-                totalProducts: z.string().nullable(),
-                totalSalesValue: z.string().nullable(),
+                descriptionGroup: z.string().nullable(),
+                totalSoldProducts: z.string().nullable(),
+                totalValueSales: z.string().nullable(),
               })
             ),
           }),
@@ -39,12 +38,12 @@ export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
       onRequest: [authenticate],
     },
     async (_, reply) => {
-      const { report } = await salesByCustomer()
+      const { report } = await salesByProductGroup()
 
       if (!report)
         return reply
           .status(400)
-          .send({ message: 'Não foi possível obter o relatório!' })
+          .send({ message: 'Não foi possível obter o relatório' })
 
       return reply.status(200).send({ report })
     }
