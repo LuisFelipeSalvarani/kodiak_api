@@ -1,8 +1,8 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import { getAllCostumersRoute } from './get-all-costumers'
+import { getAllcustomersRoute } from './get-all-customers'
 import { getCustomerProductsHistoryRoute } from './get-customer-products-history'
 
-export const costumersRoutes: FastifyPluginAsyncZod = async app => {
-  await app.register(getAllCostumersRoute)
+export const customersRoutes: FastifyPluginAsyncZod = async app => {
+  await app.register(getAllcustomersRoute)
   await app.register(getCustomerProductsHistoryRoute)
 }

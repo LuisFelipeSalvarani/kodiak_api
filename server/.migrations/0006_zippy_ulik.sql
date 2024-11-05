@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	CONSTRAINT "companies_cnpj_unique" UNIQUE("cnpj")
 );
 --> statement-breakpoint
-ALTER TABLE "users" RENAME COLUMN "id_costumer" TO "id_company";--> statement-breakpoint
+ALTER TABLE "users" RENAME COLUMN "id_customer" TO "id_company";--> statement-breakpoint
 ALTER TABLE "users" ALTER COLUMN "id_company" SET DATA TYPE text;--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "users" ADD CONSTRAINT "users_id_company_companies_id_fk" FOREIGN KEY ("id_company") REFERENCES "public"."companies"("id") ON DELETE no action ON UPDATE no action;

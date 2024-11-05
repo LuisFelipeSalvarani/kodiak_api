@@ -6,9 +6,9 @@ import { z } from 'zod'
 import { salesByCustomer } from '../../../functions/sales/get-sales-by-customer'
 import { authenticate } from '../../../hook/auth-hook'
 
-export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
+export const salesBycustomerRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().get(
-    '/by/costumer',
+    '/by/customer',
     {
       schema: {
         summary: 'Relatório de vendas por cliente',
@@ -19,7 +19,7 @@ export const salesByCostumerRoute: FastifyPluginAsyncZod = async app => {
           200: z.object({
             report: z.array(
               z.object({
-                idCostumer: z.number().nullable(),
+                idcustomer: z.number().nullable(),
                 companyName: z.string().nullable(),
                 totalProducts: z.string().nullable(),
                 totalSalesValue: z.string().nullable(),

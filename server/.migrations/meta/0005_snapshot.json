@@ -20,8 +20,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "id_costumer": {
-          "name": "id_costumer",
+        "id_customer": {
+          "name": "id_customer",
           "type": "integer",
           "primaryKey": false,
           "notNull": true

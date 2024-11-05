@@ -2,11 +2,11 @@ import type {
   FastifyPluginAsyncZod,
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import { any, z } from 'zod'
-import { getAllCostumers } from '../../../functions/costumer/get-all-costumers'
+import { z } from 'zod'
+import { getAllCustomers } from '../../../functions/customer/get-all-customers'
 import { authenticate } from '../../../hook/auth-hook'
 
-export const getAllCostumersRoute: FastifyPluginAsyncZod = async app => {
+export const getAllcustomersRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().get(
     '',
     {
@@ -16,9 +16,9 @@ export const getAllCostumersRoute: FastifyPluginAsyncZod = async app => {
         tags: ['Clientes'],
         response: {
           200: z.object({
-            allCostumers: z.array(
+            allCustomers: z.array(
               z.object({
-                idCostumer: z.number(),
+                idCustomer: z.number(),
                 companyName: z.string().nullable(),
               })
             ),
@@ -36,14 +36,14 @@ export const getAllCostumersRoute: FastifyPluginAsyncZod = async app => {
       onRequest: [authenticate],
     },
     async (_, reply) => {
-      const { allCostumers } = await getAllCostumers()
+      const { allCustomers } = await getAllCustomers()
 
-      if (!allCostumers)
+      if (!allCustomers)
         return reply
           .status(400)
           .send({ message: 'Não foi possível obter os clientes!' })
 
-      return reply.status(200).send({ allCostumers })
+      return reply.status(200).send({ allCustomers })
     }
   )
 }

@@ -1,6 +1,6 @@
 import { date, decimal, integer, pgTable, text } from 'drizzle-orm/pg-core'
 
-export const costumers = pgTable('fatec_clientes', {
+export const customers = pgTable('fatec_clientes', {
   idCustomer: integer('id_cliente').primaryKey(),
   companyName: text('razao_cliente'),
   tradeName: text('nome_fantasia'),

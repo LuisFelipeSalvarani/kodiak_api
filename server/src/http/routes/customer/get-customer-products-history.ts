@@ -3,7 +3,7 @@ import type {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { getCustomerProductsHistory } from '../../../functions/costumer/get-customer-products-history'
+import { getCustomerProductsHistory } from '../../../functions/customer/get-customer-products-history'
 import { authenticate } from '../../../hook/auth-hook'
 
 export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
@@ -21,7 +21,7 @@ export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
           }),
           response: {
             200: z.object({
-              costumerHistory: z.object({
+              customerHistory: z.object({
                 idCustomer: z.number(),
                 companyName: z.string().nullable(),
                 topProducts: z.array(
@@ -59,10 +59,10 @@ export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
       async (request, reply) => {
         const { customerId } = request.params
 
-        const { costumer, topProducts, lastPurchases } =
+        const { customer, topProducts, lastPurchases } =
           await getCustomerProductsHistory(customerId)
 
-        if (!costumer || !topProducts || !lastPurchases) {
+        if (!customer || !topProducts || !lastPurchases) {
           return reply.status(400).send({
             message: 'Erro ao buscar histórico de produtos do cliente',
           })
@@ -76,9 +76,9 @@ export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
           .toFixed(2)
 
         return reply.status(200).send({
-          costumerHistory: {
-            idCustomer: costumer[0].idCustomer,
-            companyName: costumer[0].companyName,
+          customerHistory: {
+            idCustomer: customer[0].idCustomer,
+            companyName: customer[0].companyName,
             topProducts,
             lastPurchases,
             totalLastPurchases: totalLastPurchases.toString(),

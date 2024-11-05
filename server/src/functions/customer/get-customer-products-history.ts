@@ -1,6 +1,6 @@
 import { desc, eq, sum } from 'drizzle-orm'
 import { view } from '../../db'
-import { costumers, sales } from '../../db/viewSchema'
+import { customers, sales } from '../../db/viewSchema'
 
 export const getCustomerProductsHistory = async (customerId: number) => {
   const topProducts = await view
@@ -29,16 +29,16 @@ export const getCustomerProductsHistory = async (customerId: number) => {
     .orderBy(desc(sales.issueDate))
     .limit(3)
 
-  const costumer = await view
+  const customer = await view
     .select({
-      idCustomer: costumers.idCustomer,
-      companyName: costumers.companyName,
+      idCustomer: customers.idCustomer,
+      companyName: customers.companyName,
     })
-    .from(costumers)
-    .where(eq(costumers.idCustomer, customerId))
+    .from(customers)
+    .where(eq(customers.idCustomer, customerId))
 
   return {
-    costumer,
+    customer,
     topProducts,
     lastPurchases,
   }

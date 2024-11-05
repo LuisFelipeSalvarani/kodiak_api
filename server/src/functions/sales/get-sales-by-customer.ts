@@ -5,7 +5,7 @@ import { sales } from '../../db/viewSchema'
 export const salesByCustomer = async () => {
   const report = await view
     .select({
-      idCostumer: sales.idCustomer,
+      idcustomer: sales.idCustomer,
       companyName: sales.companyName,
       totalProducts: sum(sales.quantity).as('total_produtos'),
       totalSalesValue: sum(sales.total).as('valor_total_vendas'),
