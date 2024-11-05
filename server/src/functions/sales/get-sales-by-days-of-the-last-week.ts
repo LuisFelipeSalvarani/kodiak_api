@@ -1,23 +1,22 @@
 import dayjs from 'dayjs'
-import { count, desc, gte, min, sql } from 'drizzle-orm'
+import { asc, count, gte, max, sql } from 'drizzle-orm'
 import { view } from '../../db'
 import { sales } from '../../db/viewSchema'
 
 export const salesByDaysOfTheLastWeek = async () => {
-  const salesDate = await view
+  // Busca a data mais recente no banco
+  const lastSaleDate = await view
     .select({
-      minIssueDate: min(sales.issueDate).as('minima_data_emissao'),
+      maxIssueDate: max(sales.issueDate),
     })
     .from(sales)
 
-  const minIssueDate = salesDate[0]?.minIssueDate
+  const lastDate = lastSaleDate[0]?.maxIssueDate
 
-  if (!minIssueDate) return { salesByDay: [] }
+  if (!lastDate) return { salesByDay: [] }
 
   // const currentDate = dayjs()
-  const sevenDaysAgo = dayjs(minIssueDate)
-    .subtract(7, 'days')
-    .format('YYYY-MM-DD')
+  const sevenDaysAgo = dayjs(lastDate).subtract(7, 'days').format('YYYY-MM-DD')
 
   const salesByDay = await view
     .select({
@@ -36,10 +35,9 @@ export const salesByDaysOfTheLastWeek = async () => {
     .from(sales)
     .where(gte(sales.issueDate, sevenDaysAgo))
     .groupBy(sales.issueDate)
-    .orderBy(desc(sales.issueDate))
-    .limit(7)
+    .orderBy(asc(sales.issueDate))
 
   return {
-    salesByDay,
+    salesByDay: salesByDay,
   }
 }
