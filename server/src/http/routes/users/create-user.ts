@@ -7,7 +7,6 @@ import type {
 import { z } from 'zod'
 import { db } from '../../../db'
 import { companies, users } from '../../../db/schema'
-import { customers } from '../../../db/viewSchema'
 import { createUser } from '../../../functions/user/create-user'
 import { authenticate } from '../../../hook/auth-hook'
 
