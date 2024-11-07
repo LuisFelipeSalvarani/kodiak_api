@@ -18,7 +18,7 @@ export const products = pgTable('fatec_produtos', {
 })
 
 export const sales = pgTable('fatec_vendas', {
-  idSales: integer('id_vendas').primaryKey(),
+  idSales: integer('id_venda').primaryKey(),
   issueDate: date('data_emissao'),
   type: integer('tipo'),
   descriptionType: text('descricao_tipo'),
