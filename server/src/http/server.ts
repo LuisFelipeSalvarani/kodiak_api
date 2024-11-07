@@ -15,6 +15,7 @@ import { env } from '../env'
 import { authRoutes } from './routes/auth/auth-routes'
 import { companiesRoutes } from './routes/companies/companies-routes'
 import { customersRoutes } from './routes/customer/customers-route'
+import { productsRoutes } from './routes/products/products-route'
 import { salesRoutes } from './routes/sales/sales-routes'
 import { usersRoutes } from './routes/users/users-routes'
 
@@ -66,6 +67,7 @@ app.register(companiesRoutes, { prefix: '/companies' })
 app.register(authRoutes, { prefix: '/auth' })
 app.register(salesRoutes, { prefix: '/sales' })
 app.register(customersRoutes, { prefix: '/customers' })
+app.register(productsRoutes, { prefix: '/products' })
 
 app.listen({ port: 3333, host: '0.0.0.0' }).then(async () => {
   const dbConnect = await db
