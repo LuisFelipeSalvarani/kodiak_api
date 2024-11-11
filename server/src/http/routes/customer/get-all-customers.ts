@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { getAllCustomers } from '../../../functions/customer/get-all-customers'
 import { authenticate } from '../../../hook/auth-hook'
 
-export const getAllcustomersRoute: FastifyPluginAsyncZod = async app => {
+export const getAllCustomersRoute: FastifyPluginAsyncZod = async app => {
   app.withTypeProvider<ZodTypeProvider>().get(
     '',
     {
