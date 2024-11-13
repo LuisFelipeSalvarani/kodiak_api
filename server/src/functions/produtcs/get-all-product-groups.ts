@@ -1,3 +1,4 @@
+import { isNotNull } from 'drizzle-orm'
 import { view } from '../../db'
 import { products } from '../../db/viewSchema'
 
@@ -8,6 +9,7 @@ export const getAllProductGroups = async () => {
       descriptionGroup: products.descriptionGroup,
     })
     .from(products)
+    .where(isNotNull(products.idGroup))
 
   return { allProductGroups }
 }
