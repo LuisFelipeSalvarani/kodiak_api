@@ -11,6 +11,7 @@ export const getTopCustomersWhoBuyTheProductById = async (
       companyName: sales.companyName,
       totalPurchasedProduct: sum(sales.quantity).as('total_produtos_comprados'),
       totalPurchases: count(sales.idSales).as('total_compras'),
+      totalValue: sum(sales.total).as('valor_total'),
     })
     .from(sales)
     .where(eq(sales.idProduct, idProduct))

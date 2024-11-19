@@ -24,6 +24,7 @@ export const getTopCustomersWhoBuyTheProductByIdRoute: FastifyPluginAsyncZod =
                   companyName: z.string().nullable(),
                   totalPurchasedProduct: z.string().nullable(),
                   totalPurchases: z.number(),
+                  totalValue: z.string().nullable(),
                 })
               ),
             }),
