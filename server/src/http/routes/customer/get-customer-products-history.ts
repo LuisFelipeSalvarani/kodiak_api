@@ -24,6 +24,8 @@ export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
               customerHistory: z.object({
                 idCustomer: z.number(),
                 companyName: z.string().nullable(),
+                dayThatBuysTheMost: z.unknown(),
+                weekThatBuysTheMost: z.unknown(),
                 topProducts: z.array(
                   z.object({
                     productId: z.string().nullable(),
@@ -59,10 +61,21 @@ export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
       async (request, reply) => {
         const { customerId } = request.params
 
-        const { customer, topProducts, lastPurchases } =
-          await getCustomerProductsHistory(customerId)
+        const {
+          customer,
+          topProducts,
+          lastPurchases,
+          dayThatBuysTheMost,
+          weekThatBuysTheMost,
+        } = await getCustomerProductsHistory(customerId)
 
-        if (!customer || !topProducts || !lastPurchases) {
+        if (
+          !customer ||
+          !topProducts ||
+          !lastPurchases ||
+          !dayThatBuysTheMost ||
+          !weekThatBuysTheMost
+        ) {
           return reply.status(400).send({
             message: 'Erro ao buscar histórico de produtos do cliente',
           })
@@ -77,8 +90,10 @@ export const getCustomerProductsHistoryRoute: FastifyPluginAsyncZod =
 
         return reply.status(200).send({
           customerHistory: {
-            idCustomer: customer[0].idCustomer,
-            companyName: customer[0].companyName,
+            idCustomer: customer.idCustomer,
+            companyName: customer.companyName,
+            dayThatBuysTheMost: dayThatBuysTheMost.day,
+            weekThatBuysTheMost: weekThatBuysTheMost.week,
             topProducts,
             lastPurchases,
             totalLastPurchases: totalLastPurchases.toString(),
